@@ -1,0 +1,17 @@
+[package]
+name = "tinytorch"
+version = "0.1.0"
+edition = "2021"
+authors = ["Jeff Zhang"]
+description = "tinytorch: torch.Tensor -> CUDA"
+license = "MIT"
+repository = "https://github.com/jeffzh4ng/tinytorch"
+keywords = ["machine-learning", "deep-learning", "neural-networks", "pytorch", "rust"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "tinytorch"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = "0.22.0"

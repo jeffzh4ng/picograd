@@ -1,10 +1,10 @@
-use ndarray::{Array, IxDyn};
 use pyo3::prelude::*;
+use crate::lazy::LazyBuffer;
 
 #[pyclass]
 #[derive(Clone, PartialEq, Debug)]
 pub struct Tensor {
-    pub data: Array<f32, IxDyn>, // tgrs is only backed by ndarray for now
+    pub lazy_buf: LazyBuffer, // tgrs is only backed by ndarray for now
     pub grad: Option<Box<Tensor>>,
     pub requires_grad: bool,
 }
@@ -12,21 +12,31 @@ pub struct Tensor {
 #[pymethods]
 impl Tensor {
     #[new]
-    fn new(data: Vec<f32>, shape: Vec<usize>, requires_grad: bool) -> Self {
+    pub fn new(data: Vec<f32>, shape: Vec<usize>, requires_grad: bool) -> Self {
         Tensor {
-            data: Array::from_shape_vec(IxDyn(&shape), data).unwrap(),
+            lazy_buf: todo!(),
             grad: None,
             requires_grad,
         }
     }
 
-    // fn __repr__(&self) -> String {
-    //     format!("Tensor({:?})", self.data)
-    // }
+    pub fn device(&self) -> String {
+        self.lazy_buf.device()
+    }
 
-    // fn __str__(&self) -> String {
-    //     format!("{:?}", self.data.to_string())
-    // }
+    #[getter]
+    pub fn shape(&self) -> Vec<usize> {
+        self.lazy_buf.shape()
+    }
+
+    #[getter]
+    pub fn dtype(&self) -> String {
+        self.lazy_buf.dtype()
+    }
+
+    fn __repr__(&self) -> String {
+        format!("Tensor({:?})", self)
+    }
 }
 
 // impl Tensor {

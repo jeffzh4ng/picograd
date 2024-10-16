@@ -1,10 +1,10 @@
 use ndarray::{Array, IxDyn};
-use crate::targets::{cpu_eval, Device, TargetOp};
+use crate::targets::{Device, TargetOp};
 
 #[derive(Clone, PartialEq, Debug)]
 pub struct LazyBuffer {
-    buf: Array<f32, IxDyn>, // todo: type buf and device together
     device: Device,
+    pub buf: Array<f32, IxDyn>, // todo: type buf and device together
 }
 
 impl LazyBuffer {
@@ -24,12 +24,7 @@ impl LazyBuffer {
         "f32".to_string() // tgrs is only using f32 for now
     }
 
-    fn eval(&self, op: TargetOp, inputs: Vec<LazyBuffer>) -> Self {
-        // todo: implement eval on Device type?
-        match self.device {
-            Device::Cpu => cpu_eval(op, inputs),
-            Device::Gpu => todo!(),
-            Device::Tpu => todo!(),
-        }
+    pub fn eval(&self, op: TargetOp) -> Self {
+        self.device.eval(op) // tgrs' lazybuf is only passthrough for now
     }
 }

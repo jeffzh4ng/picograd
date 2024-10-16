@@ -1,5 +1,5 @@
 use pyo3::prelude::*;
-use crate::lazy::LazyBuffer;
+use crate::interpreter::LazyBuffer;
 
 #[pyclass]
 #[derive(Clone, PartialEq, Debug)]

@@ -1,9 +1,8 @@
 use pyo3::prelude::*;
 
 pub mod tensor;
-mod mlops;
-mod lazy;
-mod targets;
+mod generator;
+mod interpreter;
 
 /// Formats the sum of two numbers as string.
 #[pyfunction]

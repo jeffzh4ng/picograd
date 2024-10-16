@@ -51,11 +51,15 @@ pub enum TargetOp {
 pub struct LazyBuffer {
     device: Device,
     buf: Array<f32, IxDyn>, // tgrs is only backed by ndarray for now. todo: buf type for other backends?
+                            // todo: DeviceBuffer? RawBuffer? InterpretedBuffer? CompiledBuffer?
 }
 
 impl LazyBuffer {
     pub fn new(buf: Array<f32, IxDyn>) -> Self {
-        LazyBuffer { device: Device::Cpu, buf } // tgrs is only backed by ndarray for now
+        LazyBuffer {
+            device: Device::Cpu,
+            buf,
+        } // tgrs is only backed by ndarray for now
     }
 
     pub fn device(&self) -> String {
@@ -71,48 +75,49 @@ impl LazyBuffer {
     }
 
     pub fn eval(&self, op: TargetOp) -> Self {
-      match self.device {
-        Device::Cpu => match op {
-            TargetOp::Noop => todo!(),
-            TargetOp::Exp2 => LazyBuffer::new(self.buf.mapv(|x| x.exp2())),
-            TargetOp::Log2 => LazyBuffer::new(self.buf.mapv(|x| x.log2())),
-            TargetOp::Cast => todo!(),
-            TargetOp::Sin => LazyBuffer::new(self.buf.mapv(|x| x.sin())),
-            TargetOp::Sqrt => LazyBuffer::new(self.buf.mapv(|x| x.sqrt())),
-            TargetOp::Recip => todo!(),
-            TargetOp::Neg => LazyBuffer::new(-&self.buf),
-            TargetOp::Add(y) => LazyBuffer::new(&self.buf + &y.buf),
-            TargetOp::Sub(y) => LazyBuffer::new(&self.buf - &y.buf),
-            TargetOp::Mul(y) => LazyBuffer::new(&self.buf * &y.buf),
-            TargetOp::Div(y) => LazyBuffer::new(&self.buf / &y.buf),
-            TargetOp::Mx(y) => todo!(),
-            TargetOp::Mod(y) => todo!(),
-            TargetOp::Lt(y) => todo!(),
-            TargetOp::Sum => todo!(),
-            TargetOp::MaxReduce => todo!(),
-            TargetOp::MulAcc(x, y) => todo!(),
-            TargetOp::Where(x, y) => todo!(),
-            TargetOp::Reshape => todo!(),
-            TargetOp::Permute => todo!(),
-            TargetOp::Expand => todo!(),
-            TargetOp::Pad => todo!(),
-            TargetOp::Shrink => todo!(),
-            TargetOp::Stride => todo!(),
-            TargetOp::Empty => todo!(),
-            TargetOp::Rand => todo!(),
-            TargetOp::Const => todo!(),
-            TargetOp::From => todo!(),
-            TargetOp::Contiguous => todo!(),
-            TargetOp::Custom => todo!(),
-        },
-        Device::Gpu => todo!(),
-        Device::Tpu => todo!(),
-    }
+        match self.device {
+            Device::Cpu => match op {
+                TargetOp::Noop => todo!(),
+                TargetOp::Exp2 => LazyBuffer::new(self.buf.mapv(|x| x.exp2())),
+                TargetOp::Log2 => LazyBuffer::new(self.buf.mapv(|x| x.log2())),
+                TargetOp::Cast => todo!(),
+                TargetOp::Sin => LazyBuffer::new(self.buf.mapv(|x| x.sin())),
+                TargetOp::Sqrt => LazyBuffer::new(self.buf.mapv(|x| x.sqrt())),
+                TargetOp::Recip => todo!(),
+                TargetOp::Neg => LazyBuffer::new(-&self.buf),
+                TargetOp::Add(y) => LazyBuffer::new(&self.buf + &y.buf),
+                TargetOp::Sub(y) => LazyBuffer::new(&self.buf - &y.buf),
+                TargetOp::Mul(y) => LazyBuffer::new(&self.buf * &y.buf),
+                TargetOp::Div(y) => LazyBuffer::new(&self.buf / &y.buf),
+                TargetOp::Mx(y) => todo!(),
+                TargetOp::Mod(y) => todo!(),
+                TargetOp::Lt(y) => todo!(),
+                TargetOp::Sum => todo!(),
+                TargetOp::MaxReduce => todo!(),
+                TargetOp::MulAcc(x, y) => todo!(),
+                TargetOp::Where(x, y) => todo!(),
+                TargetOp::Reshape => todo!(),
+                TargetOp::Permute => todo!(),
+                TargetOp::Expand => todo!(),
+                TargetOp::Pad => todo!(),
+                TargetOp::Shrink => todo!(),
+                TargetOp::Stride => todo!(),
+                TargetOp::Empty => todo!(),
+                TargetOp::Rand => todo!(),
+                TargetOp::Const => todo!(),
+                TargetOp::From => todo!(),
+                TargetOp::Contiguous => todo!(),
+                TargetOp::Custom => todo!(),
+            },
+            Device::Gpu => todo!(),
+            Device::Tpu => todo!(),
+        }
     }
 }
 
 #[derive(Clone, PartialEq, Debug)]
-pub enum Device { // in ml land this is called "Device"
+pub enum Device {
+    // in ml land this is called "Device"
     Cpu,
     Gpu,
     Tpu,

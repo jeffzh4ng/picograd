@@ -1,4 +1,4 @@
-use crate::{interpreter::TargetOp, interpreter::LazyBuffer};
+use crate::{interpreter::LazyBuffer, interpreter::TargetOp};
 
 pub enum DifferentiableOp {
     // unary
@@ -16,7 +16,7 @@ pub enum DifferentiableOp {
     Sub(LazyBuffer, LazyBuffer),
     Mul(LazyBuffer, LazyBuffer),
     Div(LazyBuffer, LazyBuffer),
-    
+
     // ternary
     Where(LazyBuffer, LazyBuffer, LazyBuffer),
 
@@ -33,7 +33,7 @@ pub enum DifferentiableOp {
     Flip(LazyBuffer),
 }
 
-fn forward(op: DifferentiableOp) -> LazyBuffer {
+pub fn forward(op: DifferentiableOp) -> LazyBuffer {
     match op {
         DifferentiableOp::Zero => todo!(),
         DifferentiableOp::Neg(x) => x.eval(TargetOp::Neg),
@@ -59,32 +59,31 @@ fn forward(op: DifferentiableOp) -> LazyBuffer {
     }
 }
 
-fn backward(op: DifferentiableOp) -> LazyBuffer {
+pub fn backward(op: DifferentiableOp) -> LazyBuffer {
     match op {
-            DifferentiableOp::Zero => todo!(),
-            DifferentiableOp::Neg(x) => todo!(),
-            DifferentiableOp::Sin(x) => todo!(),
-            DifferentiableOp::Relu(x) => todo!(),
-            DifferentiableOp::Log(x) => todo!(),
-            DifferentiableOp::Exp(x) => todo!(),
-            DifferentiableOp::Sqrt(x) => todo!(),
-            DifferentiableOp::Less(x, y) => todo!(),
-            DifferentiableOp::Add(x, y) => todo!(),
-            DifferentiableOp::Sub(x, y) => todo!(),
-            DifferentiableOp::Mul(x, y) => todo!(),
-            DifferentiableOp::Div(x, y) => todo!(),
-            DifferentiableOp::Where(x, y, z) => todo!(),
-            DifferentiableOp::Sum(x) => todo!(),
-            DifferentiableOp::Max(x) => todo!(),
-            DifferentiableOp::Expand(x) => todo!(),
-            DifferentiableOp::Reshape(x) => todo!(),
-            DifferentiableOp::Permute(x) => todo!(),
-            DifferentiableOp::Pad(x) => todo!(),
-            DifferentiableOp::Shrink(x) => todo!(),
-            DifferentiableOp::Flip(x) => todo!(),
+        DifferentiableOp::Zero => todo!(),
+        DifferentiableOp::Neg(x) => todo!(),
+        DifferentiableOp::Sin(x) => todo!(),
+        DifferentiableOp::Relu(x) => todo!(),
+        DifferentiableOp::Log(x) => todo!(),
+        DifferentiableOp::Exp(x) => todo!(),
+        DifferentiableOp::Sqrt(x) => todo!(),
+        DifferentiableOp::Less(x, y) => todo!(),
+        DifferentiableOp::Add(x, y) => todo!(),
+        DifferentiableOp::Sub(x, y) => todo!(),
+        DifferentiableOp::Mul(x, y) => todo!(),
+        DifferentiableOp::Div(x, y) => todo!(),
+        DifferentiableOp::Where(x, y, z) => todo!(),
+        DifferentiableOp::Sum(x) => todo!(),
+        DifferentiableOp::Max(x) => todo!(),
+        DifferentiableOp::Expand(x) => todo!(),
+        DifferentiableOp::Reshape(x) => todo!(),
+        DifferentiableOp::Permute(x) => todo!(),
+        DifferentiableOp::Pad(x) => todo!(),
+        DifferentiableOp::Shrink(x) => todo!(),
+        DifferentiableOp::Flip(x) => todo!(),
     }
 }
-
 
 // #[cfg(test)]
 // mod tests {
